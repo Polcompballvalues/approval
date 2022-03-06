@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+            "outDir": "dist",
+            "rootDir": "src",
+            "sourceMap": true,
+            "lib": ["DOM","es2021","dom.iterable"],
+            "module": "ESNext",
+            "target": "ES2021",
+            "removeComments": true,
+            "strict": false
+    }
+}

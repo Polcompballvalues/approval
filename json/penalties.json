@@ -1,0 +1,104 @@
+{
+    "artq": {
+        "type": "range",
+        "text": "Art Quality",
+        "rangevalues": {
+            "1":-4,
+            "2":-3,
+            "3":-2,
+            "4":-1,
+            "5": 0,
+            "6": 1,
+            "7": 2,
+            "8": 3,
+            "9": 4,
+            "10":5
+        }
+    },
+    "presq": {
+        "type": "range",
+        "text": "Presentation Quality",
+        "rangevalues": {
+            "1":-4,
+            "2":-3,
+            "3":-2,
+            "4":-1,
+            "5": 0,
+            "6": 1,
+            "7": 2,
+            "8": 3,
+            "9": 4,
+            "10":5
+        }
+    },
+    "occhar": {
+        "type": "checkbox",
+        "text": "Used original character",
+        "value": -9
+    },
+    "notideo": {
+        "type": "checkbox",
+        "text": "Used non-ideology character",
+        "value": -10
+    },
+    "2ideosame": {
+        "type": "checkbox",
+        "text": "Two ideologies saying the same thing",
+        "value": -10
+    },
+    "memetemp": {
+        "type": "checkbox",
+        "text": "Meme template",
+        "value": -3
+    },
+    "meta": {
+        "type": "checkbox",
+        "text": "Meta post",
+        "value": -4
+    },
+    "wrongtitle": {
+        "type": "checkbox",
+        "text": "Incorrectly titled",
+        "value": -3
+    },
+    "describeideo": {
+        "type": "checkbox",
+        "text": "Post made solely to describe an ideology",
+        "value": -9
+    },
+    "copypaste": {
+        "type": "checkbox",
+        "text": "Copy pasted within the same work",
+        "value": -7
+    },
+    "copyanother": {
+        "type": "checkbox",
+        "text": "Copy pasted from another work",
+        "value": -50
+    },
+    "respostunder5": {
+        "type": "checkbox",
+        "text": "Reposted before 5 months",
+        "value": -50
+    },
+    "respostother": {
+        "type": "checkbox",
+        "text": "Reposted by non-author",
+        "value": -50
+    },
+    "polideojourney": {
+        "type": "checkbox",
+        "text": "Political journey",
+        "value": -50
+    },
+    "whatmyideo": {
+        "type": "checkbox",
+        "text": "What's my ideology comic",
+        "value": -50
+    },
+    "artrules": {
+        "type": "checkbox",
+        "text": "Broke art rule(s) (moderator will specify below which ones)",
+        "value": -50
+    }
+}

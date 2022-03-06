@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun&family=Source+Code+Pro&display=swap');
+html {
+    font-family: 'Sarabun', sans-serif;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #34154d rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #180924;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 2px solid #34154d;
+    width: 8px;
+    background-color: #34154d;
+    border-radius: 20px;
+}
+
+body {
+    background-image: url("./Site-background.jpeg");
+    background-repeat: no-repeat, repeat;
+    background-size: 100%;
+}
+
+div.preblock {
+    text-align: center;
+}
+
+pre {
+    font-family: 'Source Code Pro', monospace;
+    text-align: left;
+    display: none;
+    margin: auto;
+    background-color: #1d1b1b;
+    color: #FFF;
+    padding: 30px;
+    border-style: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+label {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+fieldset {
+    width: 50%;
+    min-width: 800px;
+    display: block;
+    margin: 0 auto;
+    border: none;
+}
+
+input.range {
+    -webkit-appearance: none;
+    appearance: none;
+    bottom: -10px;
+    position: relative;
+    width: 100%;
+    margin: 10;
+    padding: 0;
+    margin-left: 5px;
+    border: 0;
+    align-items: center;
+    opacity: 0.7;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: blueviolet;
+    opacity: 1;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.range::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: blueviolet;
+    opacity: 1;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.rangelabel {
+    color: white;
+    font-size: 24px;
+}
+
+.check-container {
+    display: flexbox;
+}
+
+.checkblock {
+    vertical-align: top;
+    width: 32%;
+    display: inline-block;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-sizing: border-box;
+    height: 64px;
+    margin: 4px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.checkblock:hover {
+    background-color: #ddd;
+}
+
+input[type="checkbox"] {
+    padding: 10px;
+}
+
+svg {
+    padding: 0px;
+    padding-left: 5px;
+    color: white;
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+    z-index: -1;
+}
+
+.range__point,
+.range__tick {
+    fill: white;
+}
+
+#calcbutton {
+    font-family: inherit;
+    background-color: blueviolet;
+    color: white;
+    display: block;
+    margin: 20px auto;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    opacity: 0.7;
+}
+
+#calcbutton:hover {
+    opacity: 1;
+}
+
+@media screen and (max-width: 800px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow: overlay;
+        overflow-x: hidden;
+        background-size: auto auto;
+    }
+    .rangelabel {
+        text-shadow: 0.5vw 0.5vw black;
+    }
+    input.range {
+        width: 100%;
+        margin: 0px auto;
+        margin-left: 0px;
+        opacity: 0.9;
+        z-index: 1;
+    }
+    svg {
+        width: 98%;
+        padding-left: 1vw;
+        padding-right: 1vw;
+    }
+    fieldset {
+        width: 90vw;
+        min-width: 90vw;
+        margin: 2vw auto;
+        padding: 1vw;
+    }
+    .check-container {
+        width: 100%;
+    }
+    .checkblock {
+        width: 45%;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    .preblock {
+        width: 100%;
+    }
+    #finaltable {
+        font-size: 3vw;
+        margin: auto;
+        width: 90%;
+        max-width: 90%;
+        padding: 3vw;
+        padding-top: 4vw;
+        padding-bottom: 4vw;
+        overflow: hidden;
+    }
+}
