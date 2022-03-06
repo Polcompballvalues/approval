@@ -94,12 +94,12 @@ document.getElementById("finaltable")!.onclick = async () => {
     const text: string = elm.innerHTML
     navigator.clipboard.writeText(text)
     const height: number = elm.scrollHeight
-    const borheight = getComputedStyle(elm).paddingTop
+    const borheight: string = getComputedStyle(elm).paddingTop
     const width: number = elm.scrollWidth
-    const borwidth = getComputedStyle(elm).paddingLeft
+    const borwidth: string = getComputedStyle(elm).paddingLeft
     elm.style.color = "#F00"
-    elm.style.height = (height-2*(parseFloat(borheight))).toFixed(0)+"px"
-    elm.style.width = (width-2*(parseFloat(borwidth))).toFixed(0)+"px"
+    elm.style.height = (height-2*(parseFloat(borheight))).toFixed()+"px"
+    elm.style.width = (width-2*(parseFloat(borwidth))).toFixed(1)+"px"
     elm.innerHTML = "Text copied to clipboard"
     await new Promise(r => setTimeout(r,1500))
     elm.style.color = "#FFF"

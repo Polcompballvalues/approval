@@ -91,8 +91,8 @@ document.getElementById("finaltable").onclick = async () => {
     const width = elm.scrollWidth;
     const borwidth = getComputedStyle(elm).paddingLeft;
     elm.style.color = "#F00";
-    elm.style.height = (height - 2 * (parseFloat(borheight))).toFixed(0) + "px";
-    elm.style.width = (width - 2 * (parseFloat(borwidth))).toFixed(0) + "px";
+    elm.style.height = (height - 2 * (parseFloat(borheight))).toFixed(1) + "px";
+    elm.style.width = (width - 2 * (parseFloat(borwidth))).toFixed(1) + "px";
     elm.innerHTML = "Text copied to clipboard";
     await new Promise(r => setTimeout(r, 1500));
     elm.style.color = "#FFF";

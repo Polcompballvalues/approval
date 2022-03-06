@@ -7,6 +7,6 @@
             "module": "ESNext",
             "target": "ES2021",
             "removeComments": true,
-            "strict": false
+            "strict": true
     }
 }
