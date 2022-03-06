@@ -178,6 +178,10 @@ svg {
     .rangelabel {
         text-shadow: 0.5vw 0.5vw black;
     }
+    label {
+        font-size: 3.5vw;
+        margin-top: 2vw;
+    }
     input.range {
         width: 100%;
         margin: 0px auto;
@@ -201,6 +205,7 @@ svg {
     }
     .checkblock {
         width: 45%;
+        height: 20vw;
         background-color: rgba(255, 255, 255, 0.8);
     }
     .preblock {
