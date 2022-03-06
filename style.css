@@ -31,6 +31,12 @@ div.preblock {
     text-align: center;
 }
 
+h1 {
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px #180924;
+}
+
 pre {
     font-family: 'Source Code Pro', monospace;
     text-align: left;
@@ -97,10 +103,7 @@ input.range {
 .rangelabel {
     color: white;
     font-size: 24px;
-}
-
-.check-container {
-    display: flexbox;
+    text-shadow: 2px 2px #180924;
 }
 
 .checkblock {
@@ -156,6 +159,11 @@ svg {
     opacity: 1;
 }
 
+#approvetext {
+    font-size: 32px;
+    text-shadow: 2px 2px #180924;
+}
+
 @media screen and (max-width: 800px) {
     html,
     body {
@@ -163,6 +171,9 @@ svg {
         overflow: overlay;
         overflow-x: hidden;
         background-size: auto auto;
+    }
+    h1 {
+        text-shadow: 0.5vw 0.5vw black;
     }
     .rangelabel {
         text-shadow: 0.5vw 0.5vw black;
@@ -198,11 +209,16 @@ svg {
     #finaltable {
         font-size: 3vw;
         margin: auto;
-        width: 90%;
         max-width: 90%;
         padding: 3vw;
         padding-top: 4vw;
         padding-bottom: 4vw;
         overflow: hidden;
+    }
+    #approvetext {
+        font-size: 10vw;
+        text-shadow: 0.5vw 0.5vw #180924;
+        margin-bottom: 3vw;
+        margin-top: 0vw;
     }
 }
