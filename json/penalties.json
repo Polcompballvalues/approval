@@ -46,6 +46,11 @@
         "text": "Two ideologies saying the same thing",
         "value": -10
     },
+    "copytrend": {
+        "type": "checkbox",
+        "text": "copying trend",
+        "value": -4
+    },
     "memetemp": {
         "type": "checkbox",
         "text": "Meme template",

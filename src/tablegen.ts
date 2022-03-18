@@ -24,7 +24,7 @@ function tablegen(row:Array<string>): string {
     return str + "\n"
 }
 
-function determinate(name:string, penalty:penalty, score:number):retpair {
+function determinate(name:string, penalty:penalty, score:number): retpair {
     switch(penalty.type) {
         case "range": {
             const val:rangepair = rangecalc(name,penalty)
@@ -50,7 +50,7 @@ function determinate(name:string, penalty:penalty, score:number):retpair {
     }
 }
 
-async function checkboxes() {
+async function checkboxes(): Promise<void> {
     const penalties: penaltylist = await fetch("./json/penalties.json")
         .then(response => response.json())
     let table: string = tablegen(["Item","Rating","Score Change","Score"]) + tablegen(Array(4).fill(":-"))
@@ -58,13 +58,16 @@ async function checkboxes() {
     for(const i of Object.keys(penalties)) {
         let ret:retpair = determinate(i,penalties[i],score)
         score += ret.score
-        table += ret.text ? ret.text : ""
+        table += ret.text
+        if(i == "artrules" && ret.score) {
+            table += "\nart rules broken: "
+        }
     }
     const preelm = <HTMLPreElement> document.getElementById("finaltable")
     const pelm = <HTMLParagraphElement> document.getElementById("approvetext")
     preelm.innerHTML = table
     preelm.style.display = "inline-block"
-    if(score>=0){
+    if(score>=0) {
         pelm.innerHTML = "Approve this"
         pelm.style.color = "green"
     } else {
@@ -73,23 +76,23 @@ async function checkboxes() {
     }
 }
 
-window.onload = () => {
+window.onload = (): void => {
     const elms = <HTMLCollectionOf<HTMLDivElement>> document.getElementsByClassName("checkblock")
     for(const e of elms) {
-        const children: any = e.children
+        const children = <HTMLCollectionOf<HTMLDivElement>> e.children
         for(const c of children){
-            if(c.getAttribute("type") == "checkbox"){
+            if(c.getAttribute("type") == "checkbox") {
+                const box = <HTMLInputElement> c
                 e.addEventListener("click", () => {
-                    c.checked = !c.checked
+                    box.checked = !box.checked
                 })
             }
         }
     }
 }
 
-
-document.getElementById("calcbutton")!.onclick = () => checkboxes()
-document.getElementById("finaltable")!.onclick = async () => {
+document.getElementById("calcbutton")!.onclick = () : Promise<void> => checkboxes()
+document.getElementById("finaltable")!.onclick = async (): Promise<void> => {
     const elm = <HTMLPreElement> document.getElementById("finaltable")!
     const text: string = elm.innerHTML
     navigator.clipboard.writeText(text)
@@ -98,7 +101,7 @@ document.getElementById("finaltable")!.onclick = async () => {
     const width: number = elm.scrollWidth
     const borwidth: string = getComputedStyle(elm).paddingLeft
     elm.style.color = "#F00"
-    elm.style.height = (height-2*(parseFloat(borheight))).toFixed()+"px"
+    elm.style.height = (height-2*(parseFloat(borheight))).toFixed(1)+"px"
     elm.style.width = (width-2*(parseFloat(borwidth))).toFixed(1)+"px"
     elm.innerHTML = "Text copied to clipboard"
     await new Promise(r => setTimeout(r,1500))

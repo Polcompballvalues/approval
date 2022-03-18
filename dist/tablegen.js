@@ -53,7 +53,10 @@ async function checkboxes() {
     for (const i of Object.keys(penalties)) {
         let ret = determinate(i, penalties[i], score);
         score += ret.score;
-        table += ret.text ? ret.text : "";
+        table += ret.text;
+        if (i == "artrules" && ret.score) {
+            table += "\nart rules broken: ";
+        }
     }
     const preelm = document.getElementById("finaltable");
     const pelm = document.getElementById("approvetext");
@@ -74,8 +77,9 @@ window.onload = () => {
         const children = e.children;
         for (const c of children) {
             if (c.getAttribute("type") == "checkbox") {
+                const box = c;
                 e.addEventListener("click", () => {
-                    c.checked = !c.checked;
+                    box.checked = !box.checked;
                 });
             }
         }
