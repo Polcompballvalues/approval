@@ -1,31 +1,31 @@
-doctype html 
-html 
-    include includes/head 
-    body 
+doctype html
+html
+    include includes/head
+    body
         fieldset(class="range-field")
             each range in rangeElm
                 label(for=range.id class="range-label")=range.dispText
                 input(id=range.id name=range.id class="range" type="range" min="1" max="10" value="5" step="1")
                 include includes/range.svg
                 include includes/rangetxt.svg
-            
+           
         h1 Penalty:
         div(class="check-container")
-            each box in penaltyElm 
+            each box in penaltyElm
                 div(class="check-block")
                     label(for=box.id)=box.dispText
                     input(name=box.id id=box.id type="checkbox")
-        
+       
         h1 Instant Removal:
         div(class="check-container")
-            each box in removalElm 
+            each box in removalElm
                 div(class="check-block")
                     label(for=box.id)=box.dispText
                     input(name=box.id id=box.id type="checkbox")
-                    
+                   
         button(id="calc-button") Calculate
         div(class="table-block")
             p(id="approve-text")
             pre(id="final-table")
-        
+       
         script(type="module" src="dist/tablegen.js")
