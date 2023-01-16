@@ -57,7 +57,8 @@ label {
     text-align: center;
 }
 
-fieldset, .check-container {
+fieldset,
+.check-container {
     width: 50%;
     min-width: 800px;
     display: block;
@@ -124,8 +125,13 @@ input.range {
     padding-top: 3px;
 }
 
-.check-block:hover {
-    background-color: #ddd;
+.check-block label {
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.check-block input {
+    display: none;
 }
 
 input[type="checkbox"] {
@@ -170,22 +176,27 @@ svg {
 }
 
 @media screen and (max-width: 900px) {
+
     html,
     body {
         max-width: 100%;
         overflow-x: hidden;
         background-size: auto auto;
     }
+
     h1 {
         text-shadow: 0.5vw 0.5vw black;
     }
+
     .range-label {
         text-shadow: 0.5vw 0.5vw black;
     }
+
     label {
         font-size: 3.5vw;
         margin-top: 2vw;
     }
+
     input.range {
         width: 100%;
         margin: 0px auto;
@@ -193,25 +204,35 @@ svg {
         opacity: 0.9;
         z-index: 1;
     }
+
     svg {
         width: 98%;
         padding-left: 1vw;
         padding-right: 1vw;
     }
-    fieldset, .check-container {
+
+    fieldset,
+    .check-container {
         width: 90vw;
         min-width: 90vw;
         margin: 2vw auto;
         padding: 1vw;
     }
+
     .check-block {
         width: 45%;
-        height: 20vw;
+        height: 22vw;
         background-color: rgba(255, 255, 255, 0.8);
     }
+
+    .check-block label {
+        margin-top: 2vw;
+    }
+
     .table-block {
         width: 100%;
     }
+
     #final-table {
         font-size: 3vw;
         margin: auto;
@@ -219,8 +240,9 @@ svg {
         padding: 3vw;
         padding-top: 4vw;
         padding-bottom: 4vw;
-        overflow: hidden;
+        overflow-x: scroll;
     }
+
     #approve-text {
         font-size: 10vw;
         text-shadow: 0.5vw 0.5vw #180924;

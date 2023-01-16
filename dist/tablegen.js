@@ -72,15 +72,23 @@ async function checkboxes() {
     approvalLabel.scrollIntoView();
 }
 window.onload = () => {
+    const setColor = (elm, set) => elm.style.backgroundColor = set ? "rgba(255, 255, 255, 0.5)" : "rgba(204, 0, 0, 0.7)";
     const elms = document.getElementsByClassName("check-block");
     for (const elm of elms) {
         const children = elm.children;
-        for (const child of children) {
-            if (child.getAttribute("type") == "checkbox") {
-                const box = child;
-                elm.onclick = () => box.checked = !box.checked;
-            }
-        }
+        const box = [...children]
+            .filter(x => x.getAttribute("type") === "checkbox")[0];
+        const check = () => {
+            const isChecked = box.checked;
+            box.checked = !isChecked;
+            setColor(elm, isChecked);
+        };
+        [...children, elm].forEach(x => {
+            x.onclick = check;
+            setColor(elm, !box.checked);
+        });
+        elm.onmouseenter = () => elm.style.backgroundColor = box.checked ? "rgba(255, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.8)";
+        elm.onmouseleave = () => elm.style.backgroundColor = box.checked ? "rgba(204, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.5)";
     }
 };
 document.getElementById("calc-button").onclick = async () => checkboxes();
