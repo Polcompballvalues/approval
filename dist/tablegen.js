@@ -1,108 +1,106 @@
-function rangecalc(name, range) {
-    let ret = {};
+function rangeCalc(name) {
     const elm = document.getElementById(name);
-    ret.selected = parseInt(elm.value);
-    ret.score = range.rangevalues[ret.selected.toString()];
-    return ret;
+    const selection = parseInt(elm.value);
+    const score = selection - 5;
+    return {
+        selected: selection,
+        score: score
+    };
 }
-function checkcalc(name, checkbox) {
-    let ret = {};
+function checkboxCalc(name, checkbox) {
     const elm = document.getElementById(name);
-    ret.selected = elm.checked;
-    ret.score = ret.selected ? checkbox.value : 0;
-    return ret;
+    const isSelected = elm.checked;
+    return {
+        selected: isSelected,
+        score: isSelected ? checkbox.value : 0
+    };
 }
-function tablegen(row) {
-    let str = "|";
-    for (const i of row) {
-        str += i + "|";
-    }
-    return str + "\n";
-}
-function determinate(name, penalty, score) {
+const tablegen = (row) => `|${row.join("|")}|\n`;
+function determinate(name, penalty, totalScore) {
     switch (penalty.type) {
         case "range": {
-            const val = rangecalc(name, penalty);
-            let ret = {};
-            ret.score = val.score;
-            ret.text = tablegen([penalty.text, (val.selected.toString() + "/10"), val.score.toString(), (score + ret.score).toString()]);
-            return ret;
+            const val = rangeCalc(name);
+            const addedScore = totalScore + val.score;
+            const rangeStr = val.selected.toString() + "/10";
+            return {
+                score: val.score,
+                text: tablegen([penalty.text, rangeStr, val.score.toString(), addedScore.toString()])
+            };
         }
         case "checkbox": {
-            const val = checkcalc(name, penalty);
-            let ret = {};
+            const val = checkboxCalc(name, penalty);
+            const addedScore = totalScore + val.score;
             if (val.selected) {
-                ret.score = val.score;
-                ret.text = tablegen([penalty.text, "broken", val.score.toString(), (score + ret.score).toString()]);
+                return {
+                    score: val.score,
+                    text: tablegen([penalty.text, "broken", val.score.toString(), addedScore.toString()])
+                };
             }
             else {
-                ret.score = 0;
-                ret.text = "";
+                return null;
             }
-            return ret;
         }
         default:
             throw new Error("invalid penalty type");
     }
 }
 async function checkboxes() {
-    const penalties = await fetch("./json/penalties.json")
+    const penalties = await fetch("./dist/penalties.json")
         .then(response => response.json());
     let table = tablegen(["Item", "Rating", "Score Change", "Score"]) + tablegen(Array(4).fill(":-"));
     let score = 0;
+    let artRules = false;
     for (const i of Object.keys(penalties)) {
-        let ret = determinate(i, penalties[i], score);
+        const ret = determinate(i, penalties[i], score);
+        if (!ret)
+            continue;
         score += ret.score;
         table += ret.text;
-        if (i == "artrules" && ret.score) {
-            table += "\nart rules broken: ";
+        if (i === "artrules" || i === "minorartrules") {
+            artRules = true;
         }
     }
-    const preelm = document.getElementById("finaltable");
-    const pelm = document.getElementById("approvetext");
-    preelm.innerHTML = table;
-    preelm.style.display = "inline-block";
-    if (score >= 0) {
-        pelm.innerHTML = "Approve this";
-        pelm.style.color = "green";
+    if (artRules) {
+        table += "\nArt rules broken: ";
     }
-    else {
-        pelm.innerHTML = "Remove this";
-        pelm.style.color = "red";
-    }
+    const tableElm = document.getElementById("final-table");
+    tableElm.innerHTML = table;
+    tableElm.style.display = "inline-block";
+    const approvalLabel = document.getElementById("approve-text");
+    approvalLabel.innerHTML = score >= 0 ? "Approve this" : "Remove this";
+    approvalLabel.style.color = score >= 0 ? "green" : "red";
+    approvalLabel.scrollIntoView();
 }
 window.onload = () => {
-    const elms = document.getElementsByClassName("checkblock");
-    for (const e of elms) {
-        const children = e.children;
-        for (const c of children) {
-            if (c.getAttribute("type") == "checkbox") {
-                const box = c;
-                e.addEventListener("click", () => {
-                    box.checked = !box.checked;
-                });
+    const elms = document.getElementsByClassName("check-block");
+    for (const elm of elms) {
+        const children = elm.children;
+        for (const child of children) {
+            if (child.getAttribute("type") == "checkbox") {
+                const box = child;
+                elm.onclick = () => box.checked = !box.checked;
             }
         }
     }
 };
-document.getElementById("calcbutton").onclick = () => checkboxes();
-document.getElementById("finaltable").onclick = async () => {
-    const elm = document.getElementById("finaltable");
-    const text = elm.innerHTML;
+document.getElementById("calc-button").onclick = async () => checkboxes();
+const tableElm = document.getElementById("final-table");
+tableElm.onclick = async () => {
+    const text = tableElm.textContent;
     navigator.clipboard.writeText(text);
-    const height = elm.scrollHeight;
-    const borheight = getComputedStyle(elm).paddingTop;
-    const width = elm.scrollWidth;
-    const borwidth = getComputedStyle(elm).paddingLeft;
-    elm.style.color = "#F00";
-    elm.style.height = (height - 2 * (parseFloat(borheight))).toFixed(1) + "px";
-    elm.style.width = (width - 2 * (parseFloat(borwidth))).toFixed(1) + "px";
-    elm.innerHTML = "Text copied to clipboard";
+    const height = tableElm.scrollHeight;
+    const borderHeight = parseFloat(getComputedStyle(tableElm).paddingTop);
+    const width = tableElm.scrollWidth;
+    const borderWidth = parseFloat(getComputedStyle(tableElm).paddingLeft);
+    tableElm.style.color = "#F00";
+    tableElm.style.height = (height - (2 * borderHeight)).toFixed(1) + "px";
+    tableElm.style.width = (width - (2 * borderWidth)).toFixed(1) + "px";
+    tableElm.innerHTML = "Text copied to clipboard";
     await new Promise(r => setTimeout(r, 1500));
-    elm.style.color = "#FFF";
-    elm.innerHTML = text;
-    elm.style.height = "auto";
-    elm.style.width = "auto";
+    tableElm.style.color = "white";
+    tableElm.innerHTML = text;
+    tableElm.style.height = "auto";
+    tableElm.style.width = "auto";
 };
 export {};
 //# sourceMappingURL=tablegen.js.map

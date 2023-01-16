@@ -3,9 +3,9 @@
             "outDir": "dist",
             "rootDir": "src",
             "sourceMap": true,
-            "lib": ["DOM","es2021","dom.iterable"],
-            "module": "ESNext",
-            "target": "ES2021",
+            "lib": ["DOM","ES2022","DOM.Iterable"],
+            "module": "ES2022",
+            "target": "ES2022",
             "removeComments": true,
             "strict": true
     }

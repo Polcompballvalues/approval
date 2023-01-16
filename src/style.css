@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Sarabun&family=Source+Code+Pro&display=swap');
+
 html {
     font-family: 'Sarabun', sans-serif;
     scroll-behavior: smooth;
@@ -22,12 +23,12 @@ html {
 }
 
 body {
-    background-image: url("./Site-background.jpeg");
+    background-image: url("../res/Site-background.jpeg");
     background-repeat: no-repeat, repeat;
     background-size: 100%;
 }
 
-div.preblock {
+div.table-block {
     text-align: center;
 }
 
@@ -56,12 +57,13 @@ label {
     text-align: center;
 }
 
-fieldset {
+fieldset, .check-container {
     width: 50%;
     min-width: 800px;
     display: block;
     margin: 0 auto;
     border: none;
+    text-align: center;
 }
 
 input.range {
@@ -70,8 +72,8 @@ input.range {
     bottom: -10px;
     position: relative;
     width: 100%;
-    margin: 10;
-    padding: 0;
+    margin: 10px;
+    padding: 0px;
     margin-left: 5px;
     border: 0;
     align-items: center;
@@ -100,26 +102,29 @@ input.range {
     border-radius: 50%;
 }
 
-.rangelabel {
+.range-label {
     color: white;
     font-size: 24px;
     text-shadow: 2px 2px #180924;
 }
 
-.checkblock {
+.check-block {
     vertical-align: top;
     width: 32%;
     display: inline-block;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.5);
     box-sizing: border-box;
-    height: 64px;
+    height: 72px;
     margin: 4px;
     border-radius: 10px;
     cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
 }
 
-.checkblock:hover {
+.check-block:hover {
     background-color: #ddd;
 }
 
@@ -135,12 +140,12 @@ svg {
     z-index: -1;
 }
 
-.range__point,
-.range__tick {
+.range-point,
+.range-tick {
     fill: white;
 }
 
-#calcbutton {
+#calc-button {
     font-family: inherit;
     background-color: blueviolet;
     color: white;
@@ -155,11 +160,11 @@ svg {
     opacity: 0.7;
 }
 
-#calcbutton:hover {
+#calc-button:hover {
     opacity: 1;
 }
 
-#approvetext {
+#approve-text {
     font-size: 32px;
     text-shadow: 2px 2px #180924;
 }
@@ -168,14 +173,13 @@ svg {
     html,
     body {
         max-width: 100%;
-        overflow: overlay;
         overflow-x: hidden;
         background-size: auto auto;
     }
     h1 {
         text-shadow: 0.5vw 0.5vw black;
     }
-    .rangelabel {
+    .range-label {
         text-shadow: 0.5vw 0.5vw black;
     }
     label {
@@ -194,25 +198,21 @@ svg {
         padding-left: 1vw;
         padding-right: 1vw;
     }
-    fieldset {
+    fieldset, .check-container {
         width: 90vw;
         min-width: 90vw;
         margin: 2vw auto;
         padding: 1vw;
     }
-    .check-container {
-        width: 100%;
-        text-align: center;
-    }
-    .checkblock {
+    .check-block {
         width: 45%;
         height: 20vw;
         background-color: rgba(255, 255, 255, 0.8);
     }
-    .preblock {
+    .table-block {
         width: 100%;
     }
-    #finaltable {
+    #final-table {
         font-size: 3vw;
         margin: auto;
         max-width: 90%;
@@ -221,7 +221,7 @@ svg {
         padding-bottom: 4vw;
         overflow: hidden;
     }
-    #approvetext {
+    #approve-text {
         font-size: 10vw;
         text-shadow: 0.5vw 0.5vw #180924;
         margin-bottom: 3vw;

@@ -1,27 +1,24 @@
-export type penalty = {
+export type Penalty = {
     type: string,
     text: string,
-    value: number,
-    rangevalues: {
-        [key: string]: number
-    }
+    value: number
 }
 
-export type penaltylist = {
-    [key: string]: penalty
+export type PenaltyMap = {
+    [key: string]: Penalty
 }
 
-export type retpair = {
+export type PenaltyPair = {
     text: string,
     score: number
 }
 
-export type rangepair = {
+export type RangePair = {
     selected: number,
     score: number
 }
 
-export type checkpair = {
+export type CheckPair = {
     selected: boolean,
     score: number
 }
