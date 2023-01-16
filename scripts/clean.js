@@ -6,4 +6,4 @@ for (const file of distDir) {
     fs.unlinkSync("./dist/" + file);
 }
 
-fs.unlinkSync("./index.html")
+fs.unlinkSync("./index.html");
