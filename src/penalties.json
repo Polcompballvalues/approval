@@ -31,7 +31,7 @@
     "copytrend": {
         "type": "checkbox",
         "instantremoval": false,
-        "text": "copying trend",
+        "text": "Copying trend",
         "disptext": "Copying trend (2+ similar posts in 1 week):",
         "value": -4
     },
@@ -39,7 +39,6 @@
         "type": "checkbox",
         "instantremoval": false,
         "text": "Meme template",
-        "disptext": "Meme template:",
         "value": -3
     },
     "meta": {
@@ -60,7 +59,6 @@
         "type": "checkbox",
         "instantremoval": false,
         "text": "Post made solely to describe an ideology",
-        "disptext": "Post made solely to describe an ideology:",
         "value": -9
     },
     "copypaste": {
@@ -93,7 +91,6 @@
         "type": "checkbox",
         "instantremoval": true,
         "text": "Political journey",
-        "disptext": "Political Journey:",
         "value": -50
     },
     "whatmyideo": {
