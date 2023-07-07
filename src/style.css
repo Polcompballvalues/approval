@@ -151,7 +151,8 @@ svg {
     fill: white;
 }
 
-#calc-button {
+#calc-button,
+#reset-button {
     font-family: inherit;
     background-color: blueviolet;
     color: white;

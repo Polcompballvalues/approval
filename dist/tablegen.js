@@ -1,40 +1,42 @@
+const tableElm = document.getElementById("final-table");
+const approvalLabel = document.getElementById("approve-text");
 function rangeCalc(name) {
     const elm = document.getElementById(name);
     const selection = parseInt(elm.value);
     const score = selection - 5;
-    return {
-        selected: selection,
-        score: score
-    };
+    return [
+        selection, score
+    ];
 }
 function checkboxCalc(name, checkbox) {
     const elm = document.getElementById(name);
     const isSelected = elm.checked;
-    return {
-        selected: isSelected,
-        score: isSelected ? checkbox.value : 0
-    };
+    return [
+        isSelected, isSelected ? checkbox.value : 0
+    ];
 }
 const tablegen = (row) => `|${row.join("|")}|\n`;
 function determinate(name, penalty, totalScore) {
     switch (penalty.type) {
         case "range": {
-            const val = rangeCalc(name);
-            const addedScore = totalScore + val.score;
-            const rangeStr = val.selected.toString() + "/10";
-            return {
-                score: val.score,
-                text: tablegen([penalty.text, rangeStr, val.score.toString(), addedScore.toString()])
-            };
+            const [selected, score] = rangeCalc(name);
+            const addedScore = totalScore + score;
+            const rangeStr = selected.toString() + "/10";
+            const text = tablegen([
+                penalty.text, rangeStr,
+                score.toString(), addedScore.toString()
+            ]);
+            return [text, score];
         }
         case "checkbox": {
-            const val = checkboxCalc(name, penalty);
-            const addedScore = totalScore + val.score;
-            if (val.selected) {
-                return {
-                    score: val.score,
-                    text: tablegen([penalty.text, "broken", val.score.toString(), addedScore.toString()])
-                };
+            const [selected, score] = checkboxCalc(name, penalty);
+            const addedScore = totalScore + score;
+            if (selected) {
+                const text = tablegen([
+                    penalty.text, "broken",
+                    score.toString(), addedScore.toString()
+                ]);
+                return [text, score];
             }
             else {
                 return null;
@@ -44,18 +46,17 @@ function determinate(name, penalty, totalScore) {
             throw new Error("invalid penalty type");
     }
 }
-async function checkboxes() {
-    const penalties = await fetch("./dist/penalties.json")
-        .then(response => response.json());
-    let table = tablegen(["Item", "Rating", "Score Change", "Score"]) + tablegen(Array(4).fill(":-"));
+async function checkboxes(penalties) {
     let score = 0;
     let artRules = false;
+    let table = tablegen(["Item", "Rating", "Score Change", "Score"]) +
+        tablegen(Array(4).fill(":-"));
     for (const i of Object.keys(penalties)) {
         const ret = determinate(i, penalties[i], score);
         if (!ret)
             continue;
-        score += ret.score;
-        table += ret.text;
+        table += ret[0];
+        score += ret[1];
         if (i === "artrules" || i === "minorartrules") {
             artRules = true;
         }
@@ -63,11 +64,9 @@ async function checkboxes() {
     if (artRules) {
         table += "\nArt rules broken: ";
     }
-    const tableElm = document.getElementById("final-table");
     tableElm.innerHTML = table;
     tableElm.style.display = "inline-block";
-    const approvalLabel = document.getElementById("approve-text");
-    approvalLabel.innerHTML = score >= 0 ? "Approve this" : "Remove this";
+    approvalLabel.textContent = score >= 0 ? "Approve this" : "Remove this";
     approvalLabel.style.color = score >= 0 ? "green" : "red";
     approvalLabel.scrollIntoView();
 }
@@ -76,8 +75,7 @@ window.onload = () => {
     const elms = document.getElementsByClassName("check-block");
     for (const elm of elms) {
         const children = elm.children;
-        const box = [...children]
-            .filter(x => x.getAttribute("type") === "checkbox")[0];
+        const box = [...children].filter(x => x.getAttribute("type") === "checkbox")[0];
         const check = () => {
             const isChecked = box.checked;
             box.checked = !isChecked;
@@ -91,8 +89,33 @@ window.onload = () => {
         elm.onmouseleave = () => elm.style.backgroundColor = box.checked ? "rgba(204, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.5)";
     }
 };
-document.getElementById("calc-button").onclick = async () => checkboxes();
-const tableElm = document.getElementById("final-table");
+let penalties;
+window.addEventListener("load", async () => {
+    const resp = await fetch("./dist/penalties.json");
+    penalties = await resp.json();
+});
+document.getElementById("calc-button")
+    .addEventListener("click", () => checkboxes(penalties));
+document.getElementById("reset-button")
+    .addEventListener("click", () => {
+    tableElm.style.display = "none";
+    approvalLabel.textContent = "";
+    for (const [pn, penalty] of Object.entries(penalties)) {
+        const elm = document.getElementById(pn);
+        switch (penalty.type) {
+            case "range":
+                elm.value = "5";
+                break;
+            case "checkbox":
+                elm.checked = false;
+                const parent = elm.parentNode;
+                parent.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+                break;
+            default:
+                throw new Error("Invalid penalty type");
+        }
+    }
+});
 tableElm.onclick = async () => {
     const text = tableElm.textContent;
     navigator.clipboard.writeText(text);
